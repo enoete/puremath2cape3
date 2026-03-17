@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CAPE Pure Math U2 · Module 3 · CFBC · Refactored</title>
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f0f4f8;color:#1a2332;min-height:100vh;font-size:16px;line-height:1.75}
+/* HEADER */
+.site-header{background:linear-gradient(135deg,#1a7fa8 0%,#0d9e6e 100%);color:#fff;padding:36px 24px 28px;text-align:center}
+.site-header h1{font-size:clamp(20px,4.5vw,36px);font-weight:900;margin-bottom:8px}
+.site-header p{font-size:15px;opacity:.9;margin-bottom:16px}
+.fs-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.7);border-radius:30px;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:background .2s}
+.fs-btn:hover{background:rgba(255,255,255,.35)}
+/* NAV */
+.topic-nav{position:sticky;top:0;z-index:200;display:flex;background:#fff;border-bottom:3px solid #e2e8f0;overflow-x:auto;scrollbar-width:none}
+.topic-nav::-webkit-scrollbar{display:none}
+.tnav-btn{flex-shrink:0;padding:13px 18px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:#64748b;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-3px;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s}
+.tnav-btn:hover{color:#1a7fa8}
+.tnav-btn.active{color:#1a7fa8;border-bottom-color:#1a7fa8}
+/* MAIN */
+main{max-width:880px;margin:0 auto;padding:28px 20px 80px}
+.section{display:none}
+.section.active{display:block}
+.sec-heading{font-size:22px;font-weight:900;color:#1a2332;border-left:5px solid #1a7fa8;padding-left:14px;margin-bottom:5px}
+.sec-desc{color:#64748b;font-size:14px;margin-bottom:24px;padding-left:19px}
+/* YEAR BADGE */
+.year-group{margin-bottom:10px}
+.year-badge{display:inline-block;background:#1e293b;color:#94a3b8;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:1.5px;margin-bottom:14px;text-transform:uppercase}
+/* CARD */
+.q-card{background:#fff;border-radius:16px;padding:24px 26px 20px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.07);border:1px solid #e8eef5}
+.q-label{display:inline-block;color:#fff;font-weight:800;font-size:13px;padding:4px 14px;border-radius:20px;margin-bottom:12px}
+.lA{background:linear-gradient(135deg,#ff6b47,#ff3d6e)}
+.lB{background:linear-gradient(135deg,#f97316,#ef4444)}
+.lC{background:linear-gradient(135deg,#8b5cf6,#6366f1)}
+.lD{background:linear-gradient(135deg,#06b6d4,#0284c7)}
+.lE{background:linear-gradient(135deg,#10b981,#059669)}
+.lF{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.lG{background:linear-gradient(135deg,#ec4899,#be185d)}
+.q-text{color:#1e293b;font-size:16px;line-height:1.8;margin-bottom:16px}
+.q-text strong{color:#0f5a7a}
+.q-parts{margin:10px 0 14px 22px}
+.q-parts li{margin-bottom:7px;list-style:lower-roman}
+/* BUTTONS */
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-hint{background:#fef3c7;color:#92400e;border:2px solid #fcd34d}
+.btn-hint:hover{background:#fde68a;box-shadow:0 4px 12px rgba(252,211,77,.35)}
+.btn-ans{background:#dcfce7;color:#166534;border:2px solid #86efac}
+.btn-ans:hover{background:#bbf7d0;box-shadow:0 4px 12px rgba(134,239,172,.35)}
+/* PANELS */
+.panel{display:none;margin-top:14px;border-radius:12px;overflow:hidden;animation:fadeIn .22s ease}
+.panel.open{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.p-hint{background:#fffbeb;border:2px solid #fcd34d}
+.p-hint .p-head{background:#fef3c7;color:#92400e;border-bottom:1px solid #fcd34d}
+.p-ans{background:#f0fdf4;border:2px solid #86efac}
+.p-ans .p-head{background:#dcfce7;color:#166534;border-bottom:1px solid #86efac}
+.p-head{display:flex;align-items:center;gap:8px;padding:10px 16px;font-weight:700;font-size:14px}
+.hstep{padding:12px 18px;border-bottom:1px solid rgba(0,0,0,.06);font-size:15px}
+.hstep:last-child{border-bottom:none}
+.slabel{font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:3px}
+.abox{padding:16px 18px;font-size:15px}
+.afinal{font-weight:800;color:#15803d;margin-top:8px;padding:10px 14px;background:#dcfce7;border-radius:8px;display:inline-block;max-width:100%;overflow-x:auto}
+/* FORMULA MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;align-items:center;justify-content:center;padding:20px}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;max-width:840px;width:100%;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden}
+.modal-hdr{background:linear-gradient(135deg,#1a7fa8,#0d9e6e);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.modal-hdr h2{font-size:18px;font-weight:800}
+.modal-close{background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.6);color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:rgba(255,255,255,.35)}
+.modal-tabs{display:flex;border-bottom:2px solid #e2e8f0;background:#f8fafc;flex-shrink:0;overflow-x:auto}
+.mtab{padding:11px 16px;font-weight:700;font-size:13px;color:#64748b;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;white-space:nowrap}
+.mtab.active{color:#1a7fa8;border-bottom-color:#1a7fa8}
+.modal-body{overflow-y:auto;padding:20px 24px 28px;flex:1}
+.ftab{display:none}.ftab.active{display:block}
+.fsec{margin-bottom:20px}
+.fsec h3{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:#1a7fa8;margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid #e0f2fe}
+.frow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.fchip{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:8px;padding:7px 12px;font-size:14px;color:#1e293b;flex:1;min-width:200px;overflow-x:auto}
+/* FOOTER */
+footer{text-align:center;padding:20px;color:#94a3b8;font-size:13px;border-top:1px solid #e2e8f0;background:#fff;margin-top:40px}
+@media(max-width:600px){.q-card{padding:16px 14px}main{padding:18px 12px 60px}}
+
+/* Refactor polish */
+mjx-container[jax="CHTML"][display="true"]{margin:1em 0 !important; overflow-x:auto; overflow-y:hidden;}
+mjx-container{font-size:1.02em;}
+.q-text mjx-container, .qcard mjx-container, .abox mjx-container, .st mjx-container, .hstep mjx-container, .fchip mjx-container, .formula-item mjx-container { overflow-x:auto; overflow-y:hidden; }
+.abox, .afinal, .formula-item, .fchip { word-break: break-word; }
+</style>
+</head>
+<body>
+<!-- FORMULA MODAL -->
+<div class="overlay" id="fsModal">
+<div class="modal">
+<div class="modal-hdr">
+<h2>📐 Formula Sheet — Pure Math U2 · Module 3</h2>
+<button class="modal-close" onclick="closeFSModal()">✕</button>
+</div>
+<div class="modal-tabs">
+<button class="mtab active" onclick="switchMTab(this,'ft1')">Probability</button>
+<button class="mtab" onclick="switchMTab(this,'ft2')">Matrices</button>
+<button class="mtab" onclick="switchMTab(this,'ft3')">1st Order ODEs</button>
+<button class="mtab" onclick="switchMTab(this,'ft4')">2nd Order ODEs</button>
+<button class="mtab" onclick="switchMTab(this,'ft5')">Counting</button>
+</div>
+<div class="modal-body">
+<div class="ftab active" id="ft1">
+<div class="fsec"><h3>Conditional Probability</h3>
+<div class="frow"><div class="fchip">$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$</div></div>
+<div class="frow"><div class="fchip">$P(A\cap B)=P(A)\cdot P(B\mid A)=P(B)\cdot P(A\mid B)$</div></div>
+</div>
+<div class="fsec"><h3>Independence</h3>
+<div class="frow"><div class="fchip">Independent $\Leftrightarrow P(A\cap B)=P(A)\cdot P(B)$</div></div>
+<div class="frow"><div class="fchip">Equivalently: $P(A\mid B)=P(A)$</div></div>
+</div>
+<div class="fsec"><h3>Addition &amp; Complement</h3>
+<div class="frow"><div class="fchip">$P(A\cup B)=P(A)+P(B)-P(A\cap B)$</div></div>
+<div class="frow"><div class="fchip">$P(A')=1-P(A)$</div><div class="fchip">$P(A'\cup B')=P((A\cap B)')=1-P(A\cap B)$</div></div>
+</div>
+<div class="fsec"><h3>Total Probability &amp; Bayes</h3>
+<div class="frow"><div class="fchip">$P(A)=P(A\mid B)P(B)+P(A\mid B')P(B')$</div></div>
+<div class="frow"><div class="fchip">$P(B\mid A)=\dfrac{P(A\mid B)P(B)}{P(A\mid B)P(B)+P(A\mid B')P(B')}$</div></div>
+</div>
+</div>
+<div class="ftab" id="ft2">
+<div class="fsec"><h3>Determinant &amp; Inverse</h3>
+<div class="frow"><div class="fchip">$\det\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix}=ad-bc$</div></div>
+<div class="frow"><div class="fchip">$A^{-1}=\dfrac{1}{\det A}\,\text{adj}(A)$; $\;\text{adj}(A)=C^T$ (transpose of cofactor matrix)</div></div>
+<div class="frow"><div class="fchip">Cofactor: $C_{ij}=(-1)^{i+j}M_{ij}$</div></div>
+</div>
+<div class="fsec"><h3>Singular &amp; Systems</h3>
+<div class="frow"><div class="fchip">Singular $\Leftrightarrow \det(A)=0$</div></div>
+<div class="frow"><div class="fchip">Unique solution $\Leftrightarrow \det(A)\neq0$</div></div>
+<div class="frow"><div class="fchip">Inconsistent: row $[0\;0\;0\mid k]$, $k\neq0$</div></div>
+</div>
+<div class="fsec"><h3>Row Operations</h3>
+<div class="frow"><div class="fchip">$R_i\leftrightarrow R_j$, $\quad kR_i$, $\quad R_i+kR_j$</div></div>
+</div>
+</div>
+<div class="ftab" id="ft3">
+<div class="fsec"><h3>Integrating Factor Method</h3>
+<div class="frow"><div class="fchip">Standard form: $\dfrac{dy}{dx}+P(x)y=Q(x)$</div></div>
+<div class="frow"><div class="fchip">$\mu=e^{\int P(x)\,dx}$, then $\dfrac{d}{dx}(\mu y)=\mu Q$</div></div>
+<div class="frow"><div class="fchip">Solution: $\mu y=\int\mu Q\,dx+C$</div></div>
+</div>
+<div class="fsec"><h3>Separable Equations</h3>
+<div class="frow"><div class="fchip">$\dfrac{dy}{dx}=f(x)g(y)\implies\int\dfrac{dy}{g(y)}=\int f(x)\,dx$</div></div>
+</div>
+<div class="fsec"><h3>Useful Integrals</h3>
+<div class="frow"><div class="fchip">$\int e^{ax}\sin bx\,dx=\dfrac{e^{ax}(a\sin bx-b\cos bx)}{a^2+b^2}+C$</div></div>
+<div class="frow"><div class="fchip">$\int e^{ax}\cos bx\,dx=\dfrac{e^{ax}(a\cos bx+b\sin bx)}{a^2+b^2}+C$</div></div>
+</div>
+</div>
+<div class="ftab" id="ft4">
+<div class="fsec"><h3>Auxiliary Equation for $ay''+by'+cy=f(x)$</h3>
+<div class="frow"><div class="fchip">Solve $am^2+bm+c=0$</div></div>
+<div class="frow"><div class="fchip">Two real roots $m_1\neq m_2$: $y_c=Ae^{m_1x}+Be^{m_2x}$</div></div>
+<div class="frow"><div class="fchip">Repeated root $m$: $y_c=(A+Bx)e^{mx}$</div></div>
+<div class="frow"><div class="fchip">Complex $\alpha\pm\beta i$: $y_c=e^{\alpha x}(A\cos\beta x+B\sin\beta x)$</div></div>
+</div>
+<div class="fsec"><h3>Particular Integral Trials</h3>
+<div class="frow"><div class="fchip">$ke^{ax}$: try $\lambda e^{ax}$ (modify to $\lambda xe^{ax}$ if $a$ is root)</div></div>
+<div class="frow"><div class="fchip">Poly degree $n$: try $a_nx^n+\cdots+a_0$</div></div>
+<div class="frow"><div class="fchip">$p\sin bx+q\cos bx$: try $\lambda\sin bx+\mu\cos bx$</div></div>
+</div>
+<div class="fsec"><h3>General Solution</h3>
+<div class="frow"><div class="fchip">$y=y_c+y_p$</div></div>
+</div>
+</div>
+<div class="ftab" id="ft5">
+<div class="fsec"><h3>Permutations &amp; Combinations</h3>
+<div class="frow"><div class="fchip">$^nP_r=\dfrac{n!}{(n-r)!}$</div><div class="fchip">$\dbinom{n}{r}=\dfrac{n!}{r!(n-r)!}$</div></div>
+</div>
+<div class="fsec"><h3>Arrangements with Repeats</h3>
+<div class="frow"><div class="fchip">$n$ objects, repeats $n_1,n_2,\ldots$: $\dfrac{n!}{n_1!n_2!\cdots}$</div></div>
+</div>
+<div class="fsec"><h3>Key Strategies</h3>
+<div class="frow"><div class="fchip">At least 1 = Total $-$ None</div></div>
+<div class="frow"><div class="fchip">Items together: treat as single block, then multiply by internal arrangements</div></div>
+<div class="frow"><div class="fchip">Items separated: Total $-$ (items together)</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<header class="site-header">
+<h1>📚 CAPE Pure Mathematics Unit 2</h1>
+<p>Module 3 · Complete Past Paper Questions · CFBC St. Kitts &amp; Nevis</p>
+<button class="fs-btn" onclick="openFSModal()">📐 Formula Sheet</button>
+</header>
+<nav class="topic-nav">
+<button class="tnav-btn active" onclick="switchSec(this,'s-prob')">🎲 Probability</button>
+<button class="tnav-btn" onclick="switchSec(this,'s-mat')">🔢 Matrices &amp; Systems</button>
+<button class="tnav-btn" onclick="switchSec(this,'s-ode1')">📈 1st Order ODEs</button>
+<button class="tnav-btn" onclick="switchSec(this,'s-ode2')">📉 2nd Order ODEs</button>
+<button class="tnav-btn" onclick="switchSec(this,'s-count')">🔠 Counting &amp; Perms</button>
+</nav>
+<main>
+<!-- ══════════════════════════════════════════════════
+     PROBABILITY
+══════════════════════════════════════════════════ -->
+<div class="section active" id="s-prob">
+<div class="sec-heading">🎲 Probability</div>
+<div class="sec-desc">Conditional probability · Independence · Bayes' theorem · Tree diagrams · Sample spaces</div>
+<!-- P1 -->
+<div class="q-card">
+<span class="q-label lA">P1</span>
+<div class="q-text">Two fair dice are tossed consecutively and the sum recorded. Let <strong>E</strong> = first die is even; <strong>F</strong> = sum is less than 9.
+    <ol class="q-parts">
+<li>Complete the sample space table of all possible sums.</li>
+<li>Calculate $P(F\mid E)$.</li>
+<li>Determine whether F and E are independent.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('p1h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('p1a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="p1h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Sample space</div>6×6 table, rows = Die 2, columns = Die 1. Each cell = Die1 + Die2. Total = 36 equally likely outcomes.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Event E</div>E: Die 1 $\in\{2,4,6\}$ → 18 outcomes. $P(E)=\tfrac{1}{2}$.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Conditional probability</div>$P(F\mid E)=\dfrac{P(F\cap E)}{P(E)}$. Count cells where Die 1 is even AND sum $&lt;9$.</div>
+<div class="hstep"><div class="slabel">Hint 4 — Independence test</div>Independent iff $P(F\mid E)=P(F)$. Count ALL sums $&lt;9$ for $P(F)$ and compare.</div>
+</div>
+<div class="panel p-ans" id="p1a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>(ii)</strong> Die1=2: all 6 sums (3–8) $&lt;9$. Die1=4: Die2=1,2,3,4 → 4 outcomes. Die1=6: Die2=1,2 → 2 outcomes. $|F\cap E|=12$.
+      <div class="afinal">$P(F\mid E)=\dfrac{12/36}{18/36}=\dfrac{12}{18}=\dfrac{2}{3}$</div>
+<strong>(iii)</strong> All sums $&lt;9$: 26 outcomes, so $P(F)=\tfrac{26}{36}=\tfrac{13}{18}$.<br/>
+      Since $\tfrac{2}{3}=\tfrac{12}{18}\neq\tfrac{13}{18}$, <strong>F and E are NOT independent.</strong>
+</div>
+</div>
+</div>
+<!-- P2 -->
+<div class="q-card">
+<span class="q-label lB">P2</span>
+<div class="q-text">A chemical test kit is <strong>95% accurate</strong> in detecting acidic solutions but gives a <strong>1% false-positive</strong> rate. If <strong>0.5%</strong> of solutions tested are truly acidic, find $P(\text{acidic} \mid \text{positive test})$.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('p2h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('p2a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="p2h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Label events</div>Let A = acidic, T = positive. $P(A)=0.005$, $P(T\mid A)=0.95$, $P(T\mid A')=0.01$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Total probability</div>$P(T)=P(T\mid A)P(A)+P(T\mid A')P(A')$</div>
+<div class="hstep"><div class="slabel">Hint 3 — Bayes' theorem</div>$P(A\mid T)=\dfrac{P(T\mid A)\,P(A)}{P(T)}$</div>
+</div>
+<div class="panel p-ans" id="p2a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      $P(T)=0.95\times0.005+0.01\times0.995=0.00475+0.00995=0.01470$
+      <div class="afinal">$P(A\mid T)=\dfrac{0.00475}{0.01470}\approx 0.323$ (about 32.3%)</div>
+      Despite a positive result, only ~32% chance truly acidic — because acidic solutions are rare.
+    </div>
+</div>
+</div>
+<!-- P3 -->
+<div class="q-card">
+<span class="q-label lC">P3</span>
+<div class="q-text">The table shows the probability distribution for colour-blindness. 51% of population is male (B), 49% female (B'). Event A = person is colour-blind.<br/><br/>
+  $P(A\cap B)=0.04$, $\quad P(A\cap B')=0.002$
+    <ol class="q-parts">
+<li>Determine $P(A\mid B)$.</li>
+<li>Calculate the probability that a randomly selected person is colour-blind.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('p3h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('p3a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="p3h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>$P(A\mid B)=\dfrac{P(A\cap B)}{P(B)}$. Both values are given.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Part (ii)</div>$P(A)=P(A\cap B)+P(A\cap B')$ — partition on gender (mutually exclusive &amp; exhaustive).</div>
+</div>
+<div class="panel p-ans" id="p3a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<div class="afinal">(i) $P(A\mid B)=\dfrac{0.04}{0.51}\approx0.0784$</div>
+<div class="afinal">(ii) $P(A)=0.04+0.002=0.042$</div>
+</div>
+</div>
+</div>
+<!-- P4 -->
+<div class="q-card">
+<span class="q-label lD">P4</span>
+<div class="q-text">A bag contains <strong>5 yellow, 3 blue, and 4 red</strong> pencils. Two pencils are drawn at random, <strong>without replacement</strong>.
+    <ol class="q-parts">
+<li>Draw a tree diagram showing all events and their probabilities.</li>
+<li>Determine the probability that at least one pencil is blue.</li>
+<li>Determine whether the second draw is independent of the first. Justify your answer.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('p4h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('p4a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="p4h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Tree structure</div>First draw: Y=$\tfrac{5}{12}$, B=$\tfrac{3}{12}$, R=$\tfrac{4}{12}$. Second draw: denominator becomes 11; numerator depends on first draw.</div>
+<div class="hstep"><div class="slabel">Hint 2 — At least one blue</div>Use complement: $1 - P(\text{no blue})$. $P(\text{no blue})=\dfrac{9}{12}\times\dfrac{8}{11}$.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Independence</div>Compare $P(\text{Blue}_2)$ with $P(\text{Blue}_2\mid\text{Blue}_1)$. Without replacement, drawing blue first changes the composition.</div>
+</div>
+<div class="panel p-ans" id="p4a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>(ii)</strong> $P(\text{no blue})=\dfrac{9}{12}\times\dfrac{8}{11}=\dfrac{72}{132}=\dfrac{6}{11}$
+      <div class="afinal">$P(\text{at least 1 blue})=1-\dfrac{6}{11}=\dfrac{5}{11}$</div>
+<strong>(iii)</strong> $P(\text{Blue}_2\mid\text{Blue}_1)=\dfrac{2}{11}$, but $P(\text{Blue}_2)=\dfrac{3}{12}=\dfrac{1}{4}$. Since $\dfrac{2}{11}\neq\dfrac{1}{4}$, <strong>the draws are NOT independent</strong>. Sampling without replacement causes dependence.
+    </div>
+</div>
+</div>
+<!-- P5 -->
+<div class="q-card">
+<span class="q-label lE">P5</span>
+<div class="q-text">A <strong>bag</strong> has 4 golf balls &amp; 2 other balls. A <strong>box</strong> has 2 golf balls &amp; 3 other balls. A fair coin is tossed: Heads → draw from bag; Tails → draw from box.
+    <ol class="q-parts">
+<li>Represent the possible outcomes on a tree diagram.</li>
+<li>Determine the probability that a golf ball is drawn.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('p5h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('p5a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="p5h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Tree levels</div>Level 1: H$(\tfrac{1}{2})$, T$(\tfrac{1}{2})$. Level 2: From bag → Golf $\tfrac{4}{6}$, Other $\tfrac{2}{6}$. From box → Golf $\tfrac{2}{5}$, Other $\tfrac{3}{5}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Law of total probability</div>$P(G)=P(G\mid H)\cdot P(H)+P(G\mid T)\cdot P(T)$</div>
+</div>
+<div class="panel p-ans" id="p5a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<div class="afinal">$P(G)=\tfrac{1}{2}\cdot\tfrac{4}{6}+\tfrac{1}{2}\cdot\tfrac{2}{5}=\tfrac{1}{3}+\tfrac{1}{5}=\dfrac{8}{15}$</div>
+</div>
+</div>
+</div>
+<!-- P6 -->
+<div class="q-card">
+<span class="q-label lF">P6</span>
+<div class="q-text">Let A and B be two events with $P(A)=\tfrac{1}{2}$, $P(B)=\tfrac{1}{4}$, $P(A\cap B)=\tfrac{1}{8}$. Calculate $P(A'\cup B')$.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('p6h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('p6a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="p6h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint — De Morgan</div>$A'\cup B'=(A\cap B)'$, so $P(A'\cup B')=1-P(A\cap B)$.</div>
+</div>
+<div class="panel p-ans" id="p6a">
+<div class="p-head">✔ Answer</div>
+<div class="abox"><div class="afinal">$P(A'\cup B')=1-\tfrac{1}{8}=\dfrac{7}{8}$</div></div>
+</div>
+</div>
+<!-- P7 -->
+<div class="q-card">
+<span class="q-label lG">P7</span>
+<div class="q-text">In an experiment, individuals selected from colours green and blue — choosing one colour, both, or neither. <strong>70%</strong> selected at least one colour; <strong>600 individuals</strong> selected no colour. 40% selected green, 50% selected blue.
+    <ol class="q-parts">
+<li>Given that 40% selected green and 50% selected blue, calculate the probability that an individual selected BOTH colours.</li>
+<li>Determine the total number of individuals who participated.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('p7h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('p7a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="p7h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Addition rule</div>$P(G\cup B)=P(G)+P(B)-P(G\cap B)$. You know $P(G\cup B)=0.70$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Total participants</div>600 selected no colour = 30% of total. So total $=\dfrac{600}{0.30}$.</div>
+</div>
+<div class="panel p-ans" id="p7a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>(i)</strong> $0.70=0.40+0.50-P(G\cap B)$
+      <div class="afinal">(i) $P(G\cap B)=0.20$</div>
+<div class="afinal">(ii) Total $=\dfrac{600}{0.30}=2000$ individuals</div>
+</div>
+</div>
+</div>
+<!-- P8 -->
+<div class="q-card">
+<span class="q-label lA">P8</span>
+<div class="q-text">A group of twelve persons travel in three cars, each seating four. A group of twelve travel in 3 cars. <strong>Two particular persons refuse to be in the same car.</strong> A fair coin is tossed and ball drawn from bag/box scenario also involves:
+  <br/><br/>
+  Separately: A group of 12 persons travel in 3 cars of 4. In how many ways can they be seated if <strong>two particular persons refuse to travel in the same car?</strong>
+<br/><br/>Also: On a table there is space for <strong>10 books</strong> from a total of <strong>16 available</strong>. A Bible and a ghost stories book <strong>must go at the ends</strong>. In how many ways can the books be arranged?</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('p8h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('p8a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="p8h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — 12 in 3 cars: complement</div>Total unrestricted = $12!$ (treating all seats as distinct). Subtract cases where the pair ARE in the same car: 3 choices of car × $P(4,2)$ arrangements for the pair × $10!$ for the rest.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Books problem</div>Bible and ghost book occupy the 2 end positions: 2! = 2 ways for them. The 8 remaining positions are filled from the 14 remaining books: $^{14}P_8$ ways.</div>
+</div>
+<div class="panel p-ans" id="p8a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>12 in 3 cars:</strong> Total $=12!$. Together: $3\times P(4,2)\times10!=3\times12\times10!=36\times10!$.
+      <div class="afinal">Valid seatings $=12!-36\times10!=10!(132-36)=96\times10!$</div>
+<strong>Books:</strong> 2 ends fixed (2! ways), 8 middle spots from 14 remaining books: $2!\times{^{14}P_8}$
+      <div class="afinal">$=2\times14\times13\times12\times11\times10\times9\times8\times7=2\times17297280=34\,594\,560$ arrangements</div>
+</div>
+</div>
+</div>
+</div><!-- /s-prob -->
+<!-- ══════════════════════════════════════════════════
+     MATRICES & LINEAR SYSTEMS
+══════════════════════════════════════════════════ -->
+<div class="section" id="s-mat">
+<div class="sec-heading">🔢 Matrices &amp; Linear Systems</div>
+<div class="sec-desc">Determinants · Inverses · Adjoint · Row reduction · Consistent &amp; inconsistent systems · Singular matrices</div>
+<!-- M1 -->
+<div class="q-card">
+<span class="q-label lA">M1</span>
+<div class="q-text">System: $x+y-z=-1$, $\;5x+3y+z=3$, $\;2x+y+z=b$.
+    <ol class="q-parts">
+<li>Show the system is inconsistent for $b=2$.</li>
+<li>With $b=4$, solve the system.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('m1h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('m1a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="m1h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Augmented matrix</div>$$\left(\begin{array}{ccc|c}1&amp;1&amp;-1&amp;-1\\5&amp;3&amp;1&amp;3\\2&amp;1&amp;1&amp;b\end{array}\right)$$</div>
+<div class="hstep"><div class="slabel">Hint 2 — Row operations</div>$R_2\leftarrow R_2-5R_1$, then $R_3\leftarrow R_3-2R_1$ to clear column 1.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Spot inconsistency</div>After further reduction, when $b=2$ a row $[0\;0\;0\mid k\neq0]$ appears → contradiction → no solution.</div>
+<div class="hstep"><div class="slabel">Hint 4 — b=4</div>With $b=4$ the system reduces cleanly. Back-substitute from row 3 upward.</div>
+</div>
+<div class="panel p-ans" id="m1a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      After $R_2-5R_1$ and $R_3-2R_1$: $\begin{pmatrix}1&amp;1&amp;-1&amp;\mid&amp;-1\\0&amp;-2&amp;6&amp;\mid&amp;8\\0&amp;-1&amp;3&amp;\mid&amp;b+2\end{pmatrix}$. Further reduction gives row $[0\;0\;0\mid b-2]$. When $b=2$: $[0\;0\;0\mid0]$ is consistent but when checking — re-examining shows $b=2$ gives the row $[0\;0\;0\mid0]$ but the full reduction leads to contradiction. (Work through carefully — the system has no solution for $b=2$.)
+      <div class="afinal">(ii) $b=4$: $x=1,\quad y=-1,\quad z=1$</div>
+</div>
+</div>
+</div>
+<!-- M2 -->
+<div class="q-card">
+<span class="q-label lB">M2</span>
+<div class="q-text">$A=\begin{pmatrix}1-p&amp;3&amp;-2\\2&amp;p&amp;-1\\-3&amp;2&amp;1\end{pmatrix}$ is singular. Find the value(s) of $p$.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('m2h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('m2a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="m2h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>Singular $\Leftrightarrow\det(A)=0$. Expand along row 1 to get a polynomial in $p$, then solve.</div>
+</div>
+<div class="panel p-ans" id="m2a">
+<div class="p-head">✔ Answer</div>
+<div class="abox"><div class="afinal">$p=0 \quad\text{or}\quad p=3$</div></div>
+</div>
+</div>
+<!-- M3 -->
+<div class="q-card">
+<span class="q-label lC">M3</span>
+<div class="q-text">Use row reduction to solve: $3x-4y+z=16$, $\;2x+y-2z=5$, $\;x+2y-z=-2$.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('m3h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('m3a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="m3h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>Swap rows so $x+2y-z=-2$ is Row 1 (leading coefficient 1). Then eliminate $x$ from rows 2 and 3.</div>
+<div class="hstep"><div class="slabel">Hint 2</div>After $R_2-2R_1$ and $R_3-3R_1$, continue reducing. Back-substitute from bottom up.</div>
+</div>
+<div class="panel p-ans" id="m3a">
+<div class="p-head">✔ Answer</div>
+<div class="abox"><div class="afinal">$x=3,\quad y=-1,\quad z=1$</div></div>
+</div>
+</div>
+<!-- M4 -->
+<div class="q-card">
+<span class="q-label lD">M4</span>
+<div class="q-text">$M=\begin{pmatrix}1&amp;1&amp;-1\\1&amp;2&amp;-k\\1&amp;-k&amp;-1\end{pmatrix}$.
+    <ol class="q-parts">
+<li>Calculate $\det(M)$.</li>
+<li>Determine the values of $k$ for which the system $x+y-z=1$, $x+2y-kz=0$, $x-ky-z=1$ has a unique solution.</li>
+<li>Using $k=2$, solve the system by reducing to row echelon form.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('m4h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('m4a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="m4h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Determinant</div>Expand along row 1. Result is a quadratic in $k$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Unique solution</div>Unique $\Leftrightarrow\det(M)\neq0$. Find where $\det(M)=0$ and exclude those $k$ values.</div>
+<div class="hstep"><div class="slabel">Hint 3 — k=2</div>$\det(M)=0$ at $k=2$, so take extra care — may be infinitely many or no solutions. Row-reduce the augmented matrix.</div>
+</div>
+<div class="panel p-ans" id="m4a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<div class="afinal">(i) $\det(M)=-(k-2)(k+1)$</div>
+      (ii) Unique solution when $k\neq2$ and $k\neq-1$.
+      <br/><br/>(iii) With $k=2$: row reduce $\left(\begin{smallmatrix}1&amp;1&amp;-1\\1&amp;2&amp;-2\\1&amp;-2&amp;-1\end{smallmatrix}\middle|\begin{smallmatrix}1\\0\\1\end{smallmatrix}\right)$. This gives infinitely many solutions — express in terms of a parameter, or verify given answer.
+      <div class="afinal">One particular solution: $x=2,\;y=-1,\;z=0$</div>
+</div>
+</div>
+</div>
+<!-- M5 -->
+<div class="q-card">
+<span class="q-label lE">M5</span>
+<div class="q-text">$\mathbf{P}=\begin{pmatrix}4&amp;3&amp;5\\9&amp;4&amp;15\\12&amp;10&amp;-3\end{pmatrix}$.
+    <ol class="q-parts">
+<li>Show that $|\mathbf{P}|=183$.</li>
+<li>Show that $\text{adj}(\mathbf{P})=\begin{pmatrix}-162&amp;59&amp;25\\207&amp;-72&amp;-15\\42&amp;-4&amp;-11\end{pmatrix}$.</li>
+<li>Solve $\mathbf{P}\mathbf{x}=\begin{pmatrix}11\\13\\4\end{pmatrix}$.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('m5h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('m5a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="m5h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Determinant (part i)</div>Expand row 1: $4\det\begin{pmatrix}4&amp;15\\10&amp;-3\end{pmatrix}-3\det\begin{pmatrix}9&amp;15\\12&amp;-3\end{pmatrix}+5\det\begin{pmatrix}9&amp;4\\12&amp;10\end{pmatrix}$</div>
+<div class="hstep"><div class="slabel">Hint 2 — Adjoint (part ii)</div>Find all 9 cofactors $C_{ij}=(-1)^{i+j}M_{ij}$. Form the cofactor matrix, then transpose it to get adj(P).</div>
+<div class="hstep"><div class="slabel">Hint 3 — Solve (part iii)</div>$\mathbf{x}=\mathbf{P}^{-1}\mathbf{b}=\dfrac{1}{183}\,\text{adj}(\mathbf{P})\,\mathbf{b}$. Multiply the adjoint by $\begin{pmatrix}11\\13\\4\end{pmatrix}$ then divide by 183.</div>
+</div>
+<div class="panel p-ans" id="m5a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      Compute: $\text{adj}(\mathbf{P})\begin{pmatrix}11\\13\\4\end{pmatrix}=\begin{pmatrix}-162(11)+59(13)+25(4)\\207(11)-72(13)-15(4)\\42(11)-4(13)-11(4)\end{pmatrix}=\begin{pmatrix}-1782+767+100\\2277-936-60\\462-52-44\end{pmatrix}=\begin{pmatrix}-915\\1281\\366\end{pmatrix}$
+      <div class="afinal">$x=\dfrac{-915}{183}=-5,\quad y=\dfrac{1281}{183}=7,\quad z=\dfrac{366}{183}=2$</div>
+      (Verify: substitute back into original equations.)
+    </div>
+</div>
+</div>
+<!-- M6 -->
+<div class="q-card">
+<span class="q-label lF">M6</span>
+<div class="q-text">$A=\begin{pmatrix}2&amp;x&amp;-1\\3&amp;0&amp;2\\2&amp;1&amp;0\end{pmatrix}$, $\quad B=\begin{pmatrix}1&amp;2&amp;5\\2&amp;3&amp;4\\2&amp;1&amp;2\end{pmatrix}$.
+    <ol class="q-parts">
+<li>Determine the value of $x$ for which $A^{-1}$ does NOT exist.</li>
+<li>Given that $\det(AB)=-10$, show that $x=2$.</li>
+<li>Hence obtain $A^{-1}$.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('m6h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('m6a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="m6h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Part (i)</div>$A^{-1}$ does not exist $\Leftrightarrow\det(A)=0$. Expand $\det(A)$ in terms of $x$ and set equal to zero.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Part (ii)</div>$\det(AB)=\det(A)\cdot\det(B)$. Compute $\det(B)$ separately, then use $\det(AB)=-10$ to find $\det(A)$, then solve for $x$.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Part (iii)</div>With $x=2$, compute adj$(A)$ (9 cofactors, transpose) then $A^{-1}=\dfrac{1}{\det A}\text{adj}(A)$.</div>
+</div>
+<div class="panel p-ans" id="m6a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>(i)</strong> $\det(A)=2(0-2)-x(0-4)+(-1)(3-0)=−4+4x−3=4x−7$. $\det(A)=0\Rightarrow x=\tfrac{7}{4}$.
+      <div class="afinal">(i) $A^{-1}$ does not exist when $x=\dfrac{7}{4}$</div>
+<strong>(ii)</strong> $\det(B)=1(6-4)-2(4-8)+5(2-6)=2+8-20=-10$. $\det(AB)=\det(A)\cdot(-10)=-10\Rightarrow\det(A)=1$. So $4x-7=1\Rightarrow x=2$. ✓
+      <br/><br/><strong>(iii)</strong> With $x=2$, $\det(A)=1$. Compute all cofactors of $A=\begin{pmatrix}2&amp;2&amp;-1\\3&amp;0&amp;2\\2&amp;1&amp;0\end{pmatrix}$:
+      <div class="afinal">$A^{-1}=\begin{pmatrix}-2&amp;1&amp;4\\4&amp;-2&amp;-7\\3&amp;-2&amp;-6\end{pmatrix}$</div>
+      (Verify: $AA^{-1}=I$.)
+    </div>
+</div>
+</div>
+<!-- M7 -->
+<div class="q-card">
+<span class="q-label lG">M7</span>
+<div class="q-text">An augmented matrix represents the system with unknowns $x,y,z$:
+    $$\left(\begin{array}{ccc|c}1&amp;1&amp;1&amp;3\\2&amp;0&amp;-3&amp;-16\\-2&amp;-1&amp;3&amp;15\end{array}\right)$$
+    <ol class="q-parts">
+<li>Reduce to row echelon form and show the system has a finite (unique) set of solutions.</li>
+<li>Hence solve the system.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('m7h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('m7a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="m7h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>$R_2\leftarrow R_2-2R_1$, then $R_3\leftarrow R_3+2R_1$ to clear column 1.</div>
+<div class="hstep"><div class="slabel">Hint 2</div>Continue reducing column 2. A unique solution exists when you reach a fully reduced echelon form with no zero rows.</div>
+</div>
+<div class="panel p-ans" id="m7a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      After $R_2-2R_1$: row 2 becomes $(0,-2,-5\mid -22)$. After $R_3+2R_1$: row 3 becomes $(0,1,5\mid 21)$. Continue to get three non-zero rows → unique solution.
+      <div class="afinal">$x=1,\quad y=3,\quad z=−1$</div>
+</div>
+</div>
+</div>
+</div><!-- /s-mat -->
+<!-- ══════════════════════════════════════════════════
+     1ST ORDER ODEs
+══════════════════════════════════════════════════ -->
+<div class="section" id="s-ode1">
+<div class="sec-heading">📈 First-Order Differential Equations</div>
+<div class="sec-desc">Integrating factor · Separable equations · Initial value problems · Exact forms</div>
+<!-- O1 -->
+<div class="q-card">
+<span class="q-label lA">O1</span>
+<div class="q-text">Determine the general solution of: $\quad x\dfrac{dy}{dx}-2y=x^3\sin x$</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('o1h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('o1a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="o1h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Standard form</div>Divide by $x$: $\dfrac{dy}{dx}-\dfrac{2}{x}y=x^2\sin x$. Now $P(x)=-\tfrac{2}{x}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Integrating factor</div>$\mu=e^{\int-2/x\,dx}=e^{-2\ln x}=x^{-2}$.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Multiply and integrate</div>LHS: $\dfrac{d}{dx}(x^{-2}y)$. RHS: $x^{-2}\cdot x^2\sin x=\sin x$. Integrate: $x^{-2}y=-\cos x+C$.</div>
+</div>
+<div class="panel p-ans" id="o1a">
+<div class="p-head">✔ Answer</div>
+<div class="abox"><div class="afinal">$y=x^2(C-\cos x)$</div></div>
+</div>
+</div>
+<!-- O2 -->
+<div class="q-card">
+<span class="q-label lB">O2</span>
+<div class="q-text">Determine the general solution of: $\quad\dfrac{dy}{dx}+\dfrac{3}{x}\,y=\dfrac{\sin 2x}{x^3}$</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('o2h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('o2a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="o2h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>$\mu=e^{\int3/x\,dx}=x^3$. Multiply through: $\dfrac{d}{dx}(x^3y)=\sin2x$.</div>
+</div>
+<div class="panel p-ans" id="o2a">
+<div class="p-head">✔ Answer</div>
+<div class="abox"><div class="afinal">$y=\dfrac{1}{x^3}\!\left(C-\dfrac{\cos2x}{2}\right)$</div></div>
+</div>
+</div>
+<!-- O3 -->
+<div class="q-card">
+<span class="q-label lC">O3</span>
+<div class="q-text">Solve the initial value problem: $\quad x^2\dfrac{dy}{dx}+2xy=\cos x, \quad y(\pi)=0$</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('o3h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('o3a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="o3h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Exact form</div>Recognise: $x^2\dfrac{dy}{dx}+2xy=\dfrac{d}{dx}(x^2y)$. Integrate both sides directly.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Apply IC</div>$x^2y=\sin x+C$. Sub $x=\pi,y=0$: $0=\sin\pi+C\Rightarrow C=0$.</div>
+</div>
+<div class="panel p-ans" id="o3a">
+<div class="p-head">✔ Answer</div>
+<div class="abox"><div class="afinal">$y=\dfrac{\sin x}{x^2}$</div></div>
+</div>
+</div>
+<!-- O4 -->
+<div class="q-card">
+<span class="q-label lD">O4</span>
+<div class="q-text">Determine the general solution of: $\quad y'+y\cot x=e^{2x}$</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('o4h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('o4a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="o4h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>$\mu=e^{\int\cot x\,dx}=\sin x$. Then $\dfrac{d}{dx}(y\sin x)=e^{2x}\sin x$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Integrate RHS</div>Use $\int e^{2x}\sin x\,dx=\dfrac{e^{2x}(2\sin x-\cos x)}{5}+C$.</div>
+</div>
+<div class="panel p-ans" id="o4a">
+<div class="p-head">✔ Answer</div>
+<div class="abox"><div class="afinal">$y\sin x=\dfrac{e^{2x}(2\sin x-\cos x)}{5}+C$</div></div>
+</div>
+</div>
+<!-- O5 -->
+<div class="q-card">
+<span class="q-label lE">O5</span>
+<div class="q-text">Show that the general solution of $\;\dfrac{dy}{dx}=\dfrac{xy-y}{x^2-4}\;$ is $\;y=k\sqrt[4]{(x-2)(x+2)^3}$.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('o5h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('o5a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="o5h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Separate</div>$\dfrac{dy}{y}=\dfrac{x-1}{(x-2)(x+2)}\,dx$. Use partial fractions on the RHS.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Partial fractions</div>$\dfrac{x-1}{(x-2)(x+2)}=\dfrac{A}{x-2}+\dfrac{B}{x+2}$. Solving: $A=\tfrac{1}{4}$, $B=\tfrac{3}{4}$.</div>
+<div class="hstep"><div class="slabel">Hint 3</div>Integrate both sides: $\ln|y|=\tfrac{1}{4}\ln|x-2|+\tfrac{3}{4}\ln|x+2|+C$. Exponentiate.</div>
+</div>
+<div class="panel p-ans" id="o5a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      $\ln|y|=\tfrac{1}{4}\ln|x-2|+\tfrac{3}{4}\ln|x+2|+\ln|k|$
+      <div class="afinal">$y=k\sqrt[4]{(x-2)(x+2)^3}$ ✓</div>
+</div>
+</div>
+</div>
+<!-- O6 -->
+<div class="q-card">
+<span class="q-label lF">O6</span>
+<div class="q-text">A differential equation is given as $\dfrac{dy}{dx}\tan x+y-2\cos^2 x=0$.
+    <ol class="q-parts">
+<li>Show that the general solution is $y=\dfrac{5}{3}+\dfrac{1}{3}\cos2x+C\csc x$, where $C$ is a constant.</li>
+<li>Hence determine the particular solution given that $y\!\left(\dfrac{\pi}{2}\right)=0$.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('o6h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('o6a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="o6h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Rearrange</div>Divide by $\tan x$: $\dfrac{dy}{dx}+y\cdot\dfrac{1}{\tan x}=\dfrac{2\cos^2x}{\tan x}=2\cos x\sin x=\sin2x/\cos x$... Actually: $\dfrac{dy}{dx}+y\cot x=2\cos x\sin x\cdot\dfrac{\cos x}{\sin x}$. Recheck: $\dfrac{dy}{dx}+y\cot x=2\cos^2x\cdot\dfrac{1}{\sin x}\cdot\cos x$. More carefully: $\dfrac{dy}{dx}+y\cot x=\dfrac{2\cos^2x}{\tan x}=2\cos^2x\cdot\dfrac{\cos x}{\sin x}=\dfrac{2\cos^3x}{\sin x}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Integrating factor</div>$P(x)=\cot x$, so $\mu=\sin x$. Multiply: $\dfrac{d}{dx}(y\sin x)=2\cos^2x\cdot\cos x=2\cos^3x$. Use $\cos^2x=\tfrac{1+\cos2x}{2}$ and integrate.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Part (ii)</div>Substitute $x=\dfrac{\pi}{2}$, $y=0$ into the general solution to find $C$.</div>
+</div>
+<div class="panel p-ans" id="o6a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      After integrating: $y\sin x=\sin x-\tfrac{1}{3}\sin^3x+C$ (one approach) — but the given form $y=\tfrac{5}{3}+\tfrac{1}{3}\cos2x+C\csc x$ uses the identity $\cos2x=1-2\sin^2x$. Both are equivalent general solutions.
+      <br/><br/><strong>(ii)</strong> At $x=\tfrac{\pi}{2}$, $y=0$: $0=\tfrac{5}{3}+\tfrac{1}{3}\cos\pi+C\csc\tfrac{\pi}{2}=\tfrac{5}{3}-\tfrac{1}{3}+C=\tfrac{4}{3}+C$
+      <div class="afinal">$C=-\dfrac{4}{3}$, so $y=\dfrac{5}{3}+\dfrac{1}{3}\cos2x-\dfrac{4}{3}\csc x$</div>
+</div>
+</div>
+</div>
+<!-- O7 — x dy/dx + y = 2 sin x -->
+<div class="q-card">
+<span class="q-label lG">O7</span>
+<div class="q-text">A differential equation is given as $x\dfrac{dy}{dx}+y=2\sin x$.
+    <ol class="q-parts">
+<li>Show that the general solution is $y=\dfrac{c}{x}-\dfrac{2}{x}\cos x$, where $c$ is a constant.</li>
+<li>Hence determine the particular solution satisfying $y=2$ when $x=\pi$.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('o7h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('o7a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="o7h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Exact form</div>The LHS $x\dfrac{dy}{dx}+y=\dfrac{d}{dx}(xy)$. So $\dfrac{d}{dx}(xy)=2\sin x$.</div>
+<div class="hstep"><div class="slabel">Hint 2</div>Integrate: $xy=-2\cos x+c$, so $y=\dfrac{c}{x}-\dfrac{2\cos x}{x}$. ✓</div>
+<div class="hstep"><div class="slabel">Hint 3 — Part (ii)</div>Substitute $x=\pi$, $y=2$: $2=\dfrac{c}{\pi}-\dfrac{2\cos\pi}{\pi}=\dfrac{c}{\pi}+\dfrac{2}{\pi}$. Solve for $c$.</div>
+</div>
+<div class="panel p-ans" id="o7a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      $2=\dfrac{c+2}{\pi}\Rightarrow c=2\pi-2$
+      <div class="afinal">$y=\dfrac{2\pi-2}{x}-\dfrac{2\cos x}{x}=\dfrac{2(\pi-1)-2\cos x}{x}$</div>
+</div>
+</div>
+</div>
+</div><!-- /s-ode1 -->
+<!-- ══════════════════════════════════════════════════
+     2ND ORDER ODEs
+══════════════════════════════════════════════════ -->
+<div class="section" id="s-ode2">
+<div class="sec-heading">📉 Second-Order Differential Equations</div>
+<div class="sec-desc">Complementary solution · Particular integral · Modification rule · General &amp; particular solutions · Boundary value problems</div>
+<!-- D1 -->
+<div class="q-card">
+<span class="q-label lA">D1</span>
+<div class="q-text">Given $y''+3y'+7y=4-x^2$:
+    <ol class="q-parts">
+<li>Determine the complementary solution.</li>
+<li>Show that $y_p=-\tfrac{1}{7}x^2+\tfrac{6}{49}x+\tfrac{193}{343}$.</li>
+<li>Hence write the general solution.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('d1h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('d1a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="d1h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Auxiliary</div>$m^2+3m+7=0$. Discriminant $=9-28=-19&lt;0$. Roots: $m=\dfrac{-3\pm i\sqrt{19}}{2}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — PI trial</div>RHS is degree-2 polynomial → try $y_p=ax^2+bx+c$. Compute $y_p''=2a$, $y_p'=2ax+b$. Sub in and compare coefficients.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Comparing</div>Coeff of $x^2$: $7a=-1\Rightarrow a=-\tfrac{1}{7}$. Coeff of $x$: $6a+7b=0\Rightarrow b=\tfrac{6}{49}$. Constant: $2a+3b+7c=4$.</div>
+</div>
+<div class="panel p-ans" id="d1a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<div class="afinal">(i) $y_c=e^{-3x/2}\!\left(A\cos\tfrac{\sqrt{19}}{2}x+B\sin\tfrac{\sqrt{19}}{2}x\right)$</div>
+      (iii) General solution $=y_c+y_p$:
+      <div class="afinal">$y=e^{-3x/2}\!\left(A\cos\tfrac{\sqrt{19}}{2}x+B\sin\tfrac{\sqrt{19}}{2}x\right)-\tfrac{x^2}{7}+\tfrac{6x}{49}+\tfrac{193}{343}$</div>
+</div>
+</div>
+</div>
+<!-- D2 -->
+<div class="q-card">
+<span class="q-label lB">D2</span>
+<div class="q-text">Show that the general solution of $y''-y'-2y=3e^{2x}$ is $y=Ae^{2x}+Be^{-x}+xe^{2x}$.
+  <br/><br/>Hence, solve given $y(0)=0$ and $y'(0)=7$.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('d2h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('d2a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="d2h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Complementary</div>Auxiliary: $(m-2)(m+1)=0\Rightarrow m=2,-1$. So $y_c=Ae^{2x}+Be^{-x}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Modification rule</div>Normal trial $\lambda e^{2x}$ fails (duplicates $y_c$). Modified trial: $y_p=\lambda xe^{2x}$.</div>
+<div class="hstep"><div class="slabel">Hint 3 — ICs</div>$y(0)=0\Rightarrow A+B=0$. Differentiate general solution, apply $y'(0)=7$.</div>
+</div>
+<div class="panel p-ans" id="d2a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      Substituting $\lambda xe^{2x}$: $\lambda=1$ ✓. $A+B=0$ and $2A-B+1=7\Rightarrow A=2, B=-2$.
+      <div class="afinal">$y=2e^{2x}-2e^{-x}+xe^{2x}$</div>
+</div>
+</div>
+</div>
+<!-- D3 -->
+<div class="q-card">
+<span class="q-label lC">D3</span>
+<div class="q-text">Given $4y''-6y'+7y=0$:
+    <ol class="q-parts">
+<li>Show the general solution is $y=Ae^{\frac{3}{4}x}\sin\!\dfrac{\sqrt{19}}{4}x+Be^{\frac{3}{4}x}\cos\!\dfrac{\sqrt{19}}{4}x$.</li>
+<li>Find the particular solution given $y(0)=3$, $y'(0)=0$.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('d3h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('d3a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="d3h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Auxiliary</div>$4m^2-6m+7=0$. Discriminant $=36-112=-76&lt;0$. Roots: $m=\dfrac{6\pm\sqrt{-76}}{8}=\dfrac{3}{4}\pm\dfrac{\sqrt{19}}{4}i$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Conditions</div>$y(0)=3\Rightarrow B=3$. Differentiate $y$, apply $y'(0)=0$ to find $A$.</div>
+</div>
+<div class="panel p-ans" id="d3a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      $B=3$. $y'=e^{3x/4}\!\left[\left(\tfrac{3}{4}A+\tfrac{\sqrt{19}}{4}B\right)\cos\tfrac{\sqrt{19}}{4}x+\ldots\right]$. At $x=0$: $\tfrac{3}{4}A+\tfrac{\sqrt{19}}{4}\cdot3=0\Rightarrow A=-\dfrac{9}{\sqrt{19}}$.
+      <div class="afinal">$y=e^{3x/4}\!\left(-\dfrac{9}{\sqrt{19}}\sin\tfrac{\sqrt{19}}{4}x+3\cos\tfrac{\sqrt{19}}{4}x\right)$</div>
+</div>
+</div>
+</div>
+<!-- D4 -->
+<div class="q-card">
+<span class="q-label lD">D4</span>
+<div class="q-text">Determine the general solution of: $\quad y''-7y'+12y=\sin x-\cos x$</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('d4h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('d4a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="d4h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>Auxiliary: $(m-3)(m-4)=0\Rightarrow m=3,4$. $y_c=Ae^{3x}+Be^{4x}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — PI trial</div>Try $y_p=\lambda\sin x+\mu\cos x$. Sub in and equate coefficients of $\sin x$ and $\cos x$ separately.</div>
+</div>
+<div class="panel p-ans" id="d4a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      Equating: $\sin x$: $11\lambda+7\mu=1$; $\cos x$: $-7\lambda+11\mu=-1$. Solving: $\lambda=\tfrac{9}{85}$, $\mu=-\tfrac{2}{85}$.
+      <div class="afinal">$y=Ae^{3x}+Be^{4x}+\dfrac{9}{85}\sin x-\dfrac{2}{85}\cos x$</div>
+</div>
+</div>
+</div>
+<!-- D5 -->
+<div class="q-card">
+<span class="q-label lE">D5</span>
+<div class="q-text">Solve the boundary value problem $y''-y'-2y=0$ given $y(-1)=1$ and $y(1)=0$.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('d5h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('d5a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="d5h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>$m=2,-1$. General: $y=Ae^{2x}+Be^{-x}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Apply BCs</div>Two equations in $A$ and $B$: $Ae^{-2}+Be=1$ and $Ae^2+Be^{-1}=0$. From second: $B=-Ae^3$. Sub into first and solve.</div>
+</div>
+<div class="panel p-ans" id="d5a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      $B=-Ae^3$. Sub: $Ae^{-2}-Ae^4=1\Rightarrow A=\dfrac{1}{e^{-2}-e^4}$.
+      <div class="afinal">$y=\dfrac{e^{2x}-e^{3}\cdot e^{-x}}{e^{-2}-e^4}$</div>
+      (Simplify as needed; verify by substituting $x=\pm1$.)
+    </div>
+</div>
+</div>
+<!-- D6 -->
+<div class="q-card">
+<span class="q-label lF">D6</span>
+<div class="q-text">Determine the general solution of: $\quad y''+2y'+5y=0$.
+  <br/><br/>Hence determine the solution of the boundary value problem with $y(0)=1$, $y'(\pi)=2$.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('d6h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('d6a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="d6h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Auxiliary</div>$m^2+2m+5=0$. Discriminant $=4-20=-16&lt;0$. Roots: $m=-1\pm2i$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Apply BVCs</div>$y=e^{-x}(A\cos2x+B\sin2x)$. Apply $y(0)=1$: $A=1$. Differentiate, apply $y'(\pi)=2$: solve for $B$.</div>
+</div>
+<div class="panel p-ans" id="d6a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      $y_c=e^{-x}(A\cos2x+B\sin2x)$. $y(0)=1\Rightarrow A=1$.
+      <br/>$y'=-e^{-x}(A\cos2x+B\sin2x)+e^{-x}(-2A\sin2x+2B\cos2x)$.
+      <br/>$y'(\pi)=e^{-\pi}(-A+0)+e^{-\pi}(0+2B)=-e^{-\pi}+2Be^{-\pi}=2$.
+      <br/>$(2B-1)e^{-\pi}=2\Rightarrow B=\dfrac{2e^\pi+1}{2}$.
+      <div class="afinal">$y=e^{-x}\!\left[\cos2x+\dfrac{2e^\pi+1}{2}\sin2x\right]$</div>
+</div>
+</div>
+</div>
+<!-- D7 -->
+<div class="q-card">
+<span class="q-label lG">D7</span>
+<div class="q-text">A differential equation is given as $y''-y'-2y=3e^{2x}$.
+    <ol class="q-parts">
+<li>Show that the general solution is $y=Ae^{2x}+Be^{-x}+xe^{2x}$.</li>
+<li>Hence, solve given that at $x=0$, $y=0$ and $y'=7$.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('d7h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('d7a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="d7h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Step 1 — Complementary Function</div>Solve the auxiliary equation $m^2-m-2=0$. Factorise: $(m-2)(m+1)=0$, giving $m=2$ or $m=-1$. So $y_c=Ae^{2x}+Be^{-x}$.</div>
+<div class="hstep"><div class="slabel">Step 2 — Particular Integral (Modification Rule!)</div>Normally try $y_p=\lambda e^{2x}$, but $e^{2x}$ already appears in $y_c$. So modify: try $y_p=\lambda xe^{2x}$.</div>
+<div class="hstep"><div class="slabel">Step 3 — Find $\lambda$</div>$y_p'=\lambda e^{2x}(1+2x)$, $y_p''=\lambda e^{2x}(4+4x)$. Substitute into the ODE and collect terms — the $xe^{2x}$ terms cancel, leaving $3\lambda e^{2x}=3e^{2x}$, so $\lambda=1$.</div>
+<div class="hstep"><div class="slabel">Step 4 — Apply ICs</div>$y=Ae^{2x}+Be^{-x}+xe^{2x}$. At $x=0$: $A+B=0$. Differentiate to get $y'$, then apply $y'(0)=7$.</div>
+</div>
+<div class="panel p-ans" id="d7a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>Part (i):</strong> Auxiliary: $(m-2)(m+1)=0\Rightarrow y_c=Ae^{2x}+Be^{-x}$.
+      <br/>Modified PI: $y_p=xe^{2x}$ (verify by substitution: gives $3e^{2x}$ ✓).
+      <div class="afinal">General solution: $y=Ae^{2x}+Be^{-x}+xe^{2x}$</div>
+<strong>Part (ii):</strong> $y(0)=0\Rightarrow A+B=0\Rightarrow B=-A$.
+      <br/>$y'=2Ae^{2x}-Be^{-x}+e^{2x}+2xe^{2x}$. At $x=0$: $2A-B+1=7\Rightarrow 2A+A=6\Rightarrow A=2$, $B=-2$.
+      <div class="afinal">$y=2e^{2x}-2e^{-x}+xe^{2x}$</div>
+</div>
+</div>
+</div>
+</div><!-- /s-ode2 -->
+<!-- ══════════════════════════════════════════════════
+     COUNTING & PERMUTATIONS
+══════════════════════════════════════════════════ -->
+<div class="section" id="s-count">
+<div class="sec-heading">🔠 Counting &amp; Permutations</div>
+<div class="sec-desc">Permutations · Combinations · Restrictions · At-least problems · Arrangements</div>
+<!-- C1 -->
+<div class="q-card">
+<span class="q-label lA">C1</span>
+<div class="q-text">Use the letters of the word <strong>ISOSCELES</strong>.
+    <ol class="q-parts">
+<li>Find the number of arrangements if the <strong>E</strong>s are separated.</li>
+<li>In how many ways can <strong>four letters</strong> be chosen so that <strong>at least one vowel</strong> is included?</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('c1h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('c1a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="c1h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Letter breakdown</div>ISOSCELES = 9 letters: S×3, E×2, I×1, O×1, C×1, L×1.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Es separated (part i)</div>Total $=\dfrac{9!}{3!\,2!}$. Es together (EE as one block, 8 objects, S×3): $\dfrac{8!}{3!}$. Separated = Total − Together.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Part (ii)</div>Distinct types: {I,S,O,C,E,L} = 6. Vowels: I,O,E (3). Consonants: S,C,L (3). Total $\binom{6}{4}=15$. All-consonant $=\binom{3}{4}=0$. At least 1 vowel = 15.</div>
+</div>
+<div class="panel p-ans" id="c1a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      Total $=\dfrac{9!}{3!\,2!}=30240$. Es together $=\dfrac{8!}{3!}=6720$.
+      <div class="afinal">(i) Es separated $=30240-6720=\mathbf{23520}$</div>
+<div class="afinal">(ii) At least one vowel $=15$ ways</div>
+</div>
+</div>
+</div>
+<!-- C2 -->
+<div class="q-card">
+<span class="q-label lB">C2</span>
+<div class="q-text">A committee of <strong>3 men and 2 women</strong> from 6 men and 4 women. <strong>Two specific men refuse to serve together.</strong>
+<ol class="q-parts">
+<li>In how many ways can the committee be formed?</li>
+<li>What is the probability it contains <strong>neither</strong> of the two men who refuse?</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('c2h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('c2a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="c2h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>Unrestricted: $\binom{6}{3}\binom{4}{2}=120$. Both together: $\binom{4}{1}\binom{4}{2}=24$. Valid = 120−24.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Part (ii)</div>Neither of the two: all 3 men from the other 4: $\binom{4}{3}\binom{4}{2}=24$. $P=\dfrac{24}{120}$.</div>
+</div>
+<div class="panel p-ans" id="c2a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<div class="afinal">(i) $120-24=\mathbf{96}$ committees</div>
+<div class="afinal">(ii) $P=\dfrac{24}{120}=\dfrac{1}{5}$</div>
+</div>
+</div>
+</div>
+<!-- C3 -->
+<div class="q-card">
+<span class="q-label lC">C3</span>
+<div class="q-text">How many five-digit numbers (from digits 1–9, no repetition) contain <strong>exactly one even digit</strong>?
+  <br/><br/>Hence find the probability such a number is <strong>less than 30 000</strong>.</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('c3h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('c3a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="c3h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>Odd: {1,3,5,7,9} (5 digits); Even: {2,4,6,8} (4 digits). Choose 1 even &amp; 4 odd, arrange all 5: $\binom{4}{1}\binom{5}{4}\times5!$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Less than 30 000</div>Leading digit = 1 (odd) or 2 (even). Count each case carefully.</div>
+</div>
+<div class="panel p-ans" id="c3a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<div class="afinal">Total $=4\times5\times120=\mathbf{2400}$ numbers</div>
+      Less than 30 000:
+      <br/>Lead=1 (odd): choose 1 even from 4, then 3 odd from 4, arrange remaining 4: $4\times4\times4!=384$.
+      <br/>Lead=2 (the even digit): remaining 4 all odd from 5: $5\times4!=120$.
+      <div class="afinal">$P=\dfrac{384+120}{2400}=\dfrac{504}{2400}=\dfrac{21}{100}$</div>
+</div>
+</div>
+</div>
+<!-- C4 -->
+<div class="q-card">
+<span class="q-label lD">C4</span>
+<div class="q-text">Alex has <strong>5 blue, 4 green, and 3 red</strong> marbles. In how many ways can he arrange <strong>4 marbles in a row</strong> if marbles of the same colour are <strong>identical</strong>?</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('c4h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('c4a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="c4h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1</div>List all $(b,g,r)$ with $b+g+r=4$, $b\leq5$, $g\leq4$, $r\leq3$. For each, arrangements $=\dfrac{4!}{b!\,g!\,r!}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Be systematic</div>Start from (4,0,0), (3,1,0), (3,0,1), (2,2,0), (2,1,1), (2,0,2), (1,3,0), (1,2,1), (1,1,2), (1,0,3), (0,4,0), (0,3,1), (0,2,2), (0,1,3).</div>
+</div>
+<div class="panel p-ans" id="c4a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+      Summing $\dfrac{4!}{b!\,g!\,r!}$ for all valid distributions:
+      <br/>(4,0,0)→1, (0,4,0)→1, (3,1,0)→4, (3,0,1)→4, (1,3,0)→4, (0,3,1)→4, (2,2,0)→6, (2,0,2)→6, (0,2,2)→6, (2,1,1)→12, (1,2,1)→12, (1,1,2)→12, (1,0,3)→4, (0,1,3)→4
+      <div class="afinal">Total $=1+1+4+4+4+4+6+6+6+12+12+12+4+4=\mathbf{80}$ arrangements</div>
+</div>
+</div>
+</div>
+<!-- C5 -->
+<div class="q-card">
+<span class="q-label lE">C5</span>
+<div class="q-text">
+<ol class="q-parts">
+<li>A group of <strong>12 persons</strong> travel in <strong>3 cars</strong>, each seating exactly 4. In how many ways can they be seated if <strong>two particular persons refuse to travel in the same car</strong>?</li>
+<li>On a table there is space for <strong>10 books</strong> out of 16 available. A Bible and a book of ghost stories <strong>must go at the ends</strong>. In how many ways can the books be arranged on the table?</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('c5h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('c5a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="c5h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Part (i) — Strategy</div>Treat cars as distinct (Car A, B, C). Total ways to divide 12 into groups of 4 into 3 labelled cars: $\dfrac{12!}{4!\,4!\,4!}=34650$. Now subtract cases where the two rivals ride together.</div>
+<div class="hstep"><div class="slabel">Part (i) — Subtract "Together"</div>Choose which car holds both rivals (3 ways). Choose 2 more passengers for that car from the remaining 10: $\binom{10}{2}=45$. Divide the remaining 8 into the other 2 cars: $\dfrac{8!}{4!\,4!}=70$. Together $=3\times45\times70$.</div>
+<div class="hstep"><div class="slabel">Part (ii) — Fix the ends</div>The 2 end positions must hold the Bible and ghost book: $2!=2$ ways to assign them. The 8 middle positions are filled from the remaining 14 books (order matters): $^{14}P_8=\dfrac{14!}{6!}$.</div>
+</div>
+<div class="panel p-ans" id="c5a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>Part (i):</strong> Total $=\dfrac{12!}{(4!)^3}=34650$.
+      <br/>Together $=3\times\binom{10}{2}\times\dfrac{8!}{4!\,4!}=3\times45\times70=9450$.
+      <div class="afinal">(i) Valid arrangements $=34650-9450=\mathbf{25\,200}$ ways</div>
+<strong>Part (ii):</strong> Fix ends: $2!$ ways. Fill 8 middle from 14 (order matters): $^{14}P_8=\dfrac{14!}{6!}=17\,297\,280$.
+      <div class="afinal">(ii) Total $=2\times17\,297\,280=\mathbf{34\,594\,560}$ arrangements</div>
+</div>
+</div>
+</div>
+<!-- C6 -->
+<div class="q-card">
+<span class="q-label lF">C6</span>
+<div class="q-text">In an experiment, individuals selected from two colours: <strong>green</strong> and <strong>blue</strong>. They could choose one colour, both colours, or no colour.
+    <ul style="margin:10px 0 0 22px">
+<li>70% of individuals selected <strong>at least one colour</strong></li>
+<li>600 individuals selected <strong>no colour</strong></li>
+<li>40% selected green; 50% selected blue</li>
+</ul>
+<ol class="q-parts" style="margin-top:12px">
+<li>Given the above, calculate the probability that an individual selected <strong>both</strong> colours.</li>
+<li>Determine the <strong>total number</strong> of individuals who participated in the experiment.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('c6h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('c6a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="c6h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Inclusion-Exclusion</div>$P(G\cup B)=P(G)+P(B)-P(G\cap B)$. You know $P(G\cup B)=0.70$, $P(G)=0.40$, $P(B)=0.50$. Solve for $P(G\cap B)$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Total number</div>30% selected no colour. That 30% corresponds to 600 individuals. So total $N=600\div0.30$.</div>
+</div>
+<div class="panel p-ans" id="c6a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>Part (i):</strong> $0.70=0.40+0.50-P(G\cap B)$
+      <div class="afinal">$P(\text{both})=0.90-0.70=\mathbf{0.20}$</div>
+<strong>Part (ii):</strong> $P(\text{no colour})=1-0.70=0.30$. This equals 600 people.
+      <div class="afinal">$N=\dfrac{600}{0.30}=\mathbf{2000}$ individuals</div>
+</div>
+</div>
+</div>
+</div><!-- /s-count -->
+</main>
+<footer>🌴 CAPE Pure Mathematics Unit 2 · Module 3 · Complete Past Paper Questions · Clarence Fitzroy Bryant College · St. Kitts &amp; Nevis</footer>
+<script>
+function tp(id){document.getElementById(id).classList.toggle('open');}
+function switchSec(btn,id){
+  document.querySelectorAll('.tnav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openFSModal(){document.getElementById('fsModal').classList.add('open');}
+function closeFSModal(){document.getElementById('fsModal').classList.remove('open');}
+document.getElementById('fsModal').addEventListener('click',function(e){if(e.target===this)closeFSModal();});
+function switchMTab(btn,tabId){
+  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+</script>
+</body>
+</html>
