@@ -212,7 +212,7 @@ mjx-container{font-size:1.02em;}
 <div class="sec-desc">Conditional probability · Independence · Bayes' theorem · Tree diagrams · Sample spaces</div>
 <!-- P1 -->
 <div class="q-card">
-<span class="q-label lA">P1</span>
+<span class="q-label lA">P1</span> <small style="color:#64748b;font-size:11px;">CAPE 2025 Paper 02 · Q5(a)</small>
 <div class="q-text">Two fair dice are tossed consecutively and the sum recorded. Let <strong>E</strong> = first die is even; <strong>F</strong> = sum is less than 9.
     <ol class="q-parts">
 <li>Complete the sample space table of all possible sums.</li>
@@ -603,6 +603,43 @@ mjx-container{font-size:1.02em;}
 </div>
 </div>
 </div>
+
+<!-- 2025 Addition – Matrices -->
+<div class="q-card">
+<span class="q-label lB">M8</span> <small style="color:#64748b;font-size:11px;">CAPE 2025 Paper 02 · Q5(b)</small>
+<div class="q-text">A system of linear equations is given as:
+$$x+y-z=-1,\quad 5x+3y+z=3,\quad 2x+y+z=b$$
+<ol class="q-parts">
+<li>By representing the system as an augmented matrix, show that the system is inconsistent for $b=2$.</li>
+<li>By letting $b=4$, solve the system of linear equations.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('m8h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('m8a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="m8h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Setup</div>Write the augmented matrix $[A\mid\mathbf{b}]$ with rows for each equation. Perform $R_2\leftarrow R_2-5R_1$ and $R_3\leftarrow R_3-2R_1$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Inconsistency ($b=2$)</div>After row reduction, the third row should become $[0\ 0\ 0\ \mid k]$ with $k\neq 0$, which is a contradiction.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Solve ($b=4$)</div>With $b=4$ the row reduces to a non-zero right-hand side. Continue to back-substitute after reaching row echelon form.</div>
+</div>
+<div class="panel p-ans" id="m8a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>Augmented matrix:</strong>
+$\left(\begin{array}{ccc|c}1&1&-1&-1\\5&3&1&3\\2&1&1&b\end{array}\right)$<br/><br/>
+$R_2\leftarrow R_2-5R_1$: $(0,-2,6\mid 8)$<br/>
+$R_3\leftarrow R_3-2R_1$: $(0,-1,3\mid b+2)$<br/>
+$R_2\leftarrow R_2-2R_3$: $\bigl(0,0,0\mid 4-2b\bigr)$<br/><br/>
+<strong>Part (i) $b=2$:</strong> Last row gives $0=0$ — system is consistent with rank 2 (infinitely many solutions), <em>not</em> inconsistent. <em>[Note: check the original paper — the values $b=2$ and $b=4$ may be swapped from the OCR.]</em><br/><br/>
+<strong>Part (ii) $b=4$:</strong> Last row gives $0=4-8=-4$ — contradiction, so the system <strong>is inconsistent</strong> for $b=4$.<br/><br/>
+<strong>Consistent case ($b=2$, infinite solutions):</strong><br/>
+From $R_3$: $-y+3z=4\Rightarrow y=3t-4$. From $R_1$: $x=3-2t$, $z=t$.<br/>
+<div class="afinal">$x=3-2t,\quad y=3t-4,\quad z=t,\quad t\in\mathbb{R}$</div>
+</div>
+</div>
+</div>
 </div><!-- /s-mat -->
 <!-- ══════════════════════════════════════════════════
      1ST ORDER ODEs
@@ -756,6 +793,34 @@ mjx-container{font-size:1.02em;}
 <div class="abox">
       $2=\dfrac{c+2}{\pi}\Rightarrow c=2\pi-2$
       <div class="afinal">$y=\dfrac{2\pi-2}{x}-\dfrac{2\cos x}{x}=\dfrac{2(\pi-1)-2\cos x}{x}$</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 2025 Addition – 1st Order ODE -->
+<div class="q-card">
+<span class="q-label lB">O8</span> <small style="color:#64748b;font-size:11px;">CAPE 2025 Paper 02 · Q6(a)</small>
+<div class="q-text">Determine the general solution of the differential equation
+$$x\,\dfrac{dy}{dx}-2y=x^3\sin x$$</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('o8h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('o8a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="o8h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Standard form</div>Divide through by $x$: $\dfrac{dy}{dx}-\dfrac{2}{x}y=x^2\sin x$. Now $P(x)=-\dfrac{2}{x}$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Integrating factor</div>$\mu=e^{\int P\,dx}=e^{-2\ln x}=x^{-2}$. Multiply both sides by $\mu$.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Integrate</div>LHS becomes $\dfrac{d}{dx}\!\left(\dfrac{y}{x^2}\right)=\sin x$. Integrate both sides directly.</div>
+</div>
+<div class="panel p-ans" id="o8a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>Standard form:</strong> $\dfrac{dy}{dx}-\dfrac{2}{x}y=x^2\sin x$<br/><br/>
+<strong>Integrating factor:</strong> $\mu=e^{\int-2/x\,dx}=e^{-2\ln x}=x^{-2}$<br/><br/>
+<strong>Multiply by $\mu$:</strong> $\dfrac{d}{dx}\!\left(\dfrac{y}{x^2}\right)=\sin x$<br/><br/>
+<strong>Integrate:</strong> $\dfrac{y}{x^2}=-\cos x+c$
+<div class="afinal">$y=x^2(c-\cos x)$</div>
 </div>
 </div>
 </div>
@@ -944,6 +1009,51 @@ mjx-container{font-size:1.02em;}
 </div>
 </div>
 </div>
+</div>
+
+<!-- 2025 Addition – 2nd Order ODE -->
+<div class="q-card">
+<span class="q-label lB">V8</span> <small style="color:#64748b;font-size:11px;">CAPE 2025 Paper 02 · Q6(b)</small>
+<div class="q-text">A differential equation is given as $y''+3y'+7y=4-x^2$.
+<ol class="q-parts">
+<li>Determine the complementary solution of the differential equation.</li>
+<li>Show that the particular solution is $y_p=-\dfrac{1}{7}x^2+\dfrac{6}{49}x+\dfrac{192}{343}$.</li>
+<li>Hence, determine the general solution.</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('v8h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('v8a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="v8h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Complementary solution</div>Solve the auxiliary equation $m^2+3m+7=0$ using the quadratic formula. The discriminant is $9-28=-19<0$, giving complex roots $m=-\tfrac{3}{2}\pm\tfrac{\sqrt{19}}{2}i$.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Particular integral</div>Since RHS is a polynomial of degree 2, try $y_p=ax^2+bx+d$. Substitute into the ODE and equate coefficients of $x^2$, $x^1$, and $x^0$.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Coefficient matching</div>$x^2$: $7a=-1$; $x^1$: $6a+7b=0$; $x^0$: $2a+3b+7d=4$. Solve in order.</div>
+</div>
+<div class="panel p-ans" id="v8a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>Part (i) — Complementary solution:</strong><br/>
+Auxiliary equation: $m^2+3m+7=0$<br/>
+$m=\dfrac{-3\pm\sqrt{9-28}}{2}=\dfrac{-3\pm\sqrt{-19}}{2}=-\dfrac{3}{2}\pm\dfrac{\sqrt{19}}{2}i$<br/>
+<div class="afinal">$y_c=e^{-3x/2}\!\left(A\cos\dfrac{\sqrt{19}\,x}{2}+B\sin\dfrac{\sqrt{19}\,x}{2}\right)$</div>
+
+<strong>Part (ii) — Particular solution:</strong><br/>
+Try $y_p=ax^2+bx+d$. Then $y_p'=2ax+b$, $y_p''=2a$.<br/>
+Substituting: $2a+3(2ax+b)+7(ax^2+bx+d)=4-x^2$<br/>
+$7ax^2+(6a+7b)x+(2a+3b+7d)=-x^2+0x+4$<br/><br/>
+Equating coefficients:<br/>
+$x^2$: $7a=-1\Rightarrow a=-\tfrac{1}{7}$<br/>
+$x^1$: $6(-\tfrac{1}{7})+7b=0\Rightarrow b=\tfrac{6}{49}$<br/>
+$x^0$: $2(-\tfrac{1}{7})+3(\tfrac{6}{49})+7d=4\Rightarrow \tfrac{4}{49}+7d=4\Rightarrow d=\tfrac{192}{343}$<br/>
+<div class="afinal">$y_p=-\dfrac{1}{7}x^2+\dfrac{6}{49}x+\dfrac{192}{343}$ ✓ <small style="font-weight:400">(Note: paper states $\tfrac{193}{343}$ — the correct value from coefficient matching is $\tfrac{192}{343}$)</small></div>
+
+<strong>Part (iii) — General solution:</strong>
+<div class="afinal">$y=e^{-3x/2}\!\left(A\cos\dfrac{\sqrt{19}\,x}{2}+B\sin\dfrac{\sqrt{19}\,x}{2}\right)-\dfrac{1}{7}x^2+\dfrac{6}{49}x+\dfrac{192}{343}$</div>
+</div>
+</div>
+</div>
 </div><!-- /s-ode2 -->
 <!-- ══════════════════════════════════════════════════
      COUNTING & PERMUTATIONS
@@ -1112,6 +1222,47 @@ mjx-container{font-size:1.02em;}
       <div class="afinal">$P(\text{both})=0.90-0.70=\mathbf{0.20}$</div>
 <strong>Part (ii):</strong> $P(\text{no colour})=1-0.70=0.30$. This equals 600 people.
       <div class="afinal">$N=\dfrac{600}{0.30}=\mathbf{2000}$ individuals</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 2025 Addition – Counting -->
+<div class="q-card">
+<span class="q-label lC">K9</span> <small style="color:#64748b;font-size:11px;">CAPE 2025 Paper 02 · Q5(c)</small>
+<div class="q-text">Use the letters of the word <strong>ISOSCELES</strong> to answer the following.
+<br/><small style="color:#64748b">Letter inventory: I(1), S(3), O(1), C(1), E(2), L(1) — 9 letters total</small>
+<ol class="q-parts">
+<li>Calculate the number of ways in which all 9 letters can be arranged if the Es are separated.</li>
+<li>In how many ways can four letters be chosen from the word so that at least one vowel is included?</li>
+</ol>
+</div>
+<div class="btn-row">
+<button class="btn btn-hint" onclick="tp('k9h')">💡 Hint</button>
+<button class="btn btn-ans" onclick="tp('k9a')">✔ Answer</button>
+</div>
+<div class="panel p-hint" id="k9h">
+<div class="p-head">💡 Hints</div>
+<div class="hstep"><div class="slabel">Hint 1 — Part (i): Es separated</div>First arrange the 7 non-E letters {I, S, S, S, O, C, L} — there are $\dfrac{7!}{3!}$ ways (dividing by 3! for the repeated Ss). This creates 8 gaps (including ends). Choose 2 of these gaps for the 2 Es: $\binom{8}{2}$ ways. Multiply.</div>
+<div class="hstep"><div class="slabel">Hint 2 — Part (ii): at least 1 vowel</div>Use complementary counting: (total selections of 4) − (selections with NO vowel). Vowels are I, O, E, E. Consonants are S, S, S, C, L. Enumerate consonant-only groups of 4 carefully from {S:3, C:1, L:1}.</div>
+<div class="hstep"><div class="slabel">Hint 3 — Consonant-only selections</div>For 4 consonants from {S×3, C×1, L×1}: need at least 2 Ss. Options: (S,S,C,L), (S,S,S,C), (S,S,S,L) — that's 3 ways.</div>
+</div>
+<div class="panel p-ans" id="k9a">
+<div class="p-head">✔ Answer</div>
+<div class="abox">
+<strong>Part (i) — Es separated:</strong><br/>
+Step 1: Arrange 7 non-E letters {I, S, S, S, O, C, L}:<br/>
+$\dfrac{7!}{3!}=\dfrac{5040}{6}=840$ arrangements<br/><br/>
+Step 2: 7 letters create 8 gaps. Place the 2 Es (identical) in 2 different gaps:<br/>
+$\dbinom{8}{2}=28$ ways<br/>
+<div class="afinal">Total with Es separated $=840\times28=\mathbf{23\,520}$</div>
+
+<strong>Part (ii) — At least 1 vowel (choosing 4 letters):</strong><br/>
+Vowels: I(1), O(1), E(2) — 4 tokens. Consonants: S(3), C(1), L(1) — 5 tokens.<br/><br/>
+Total selections of 4 from all 9 letters (using generating functions or enumeration) $= \mathbf{41}$<br/><br/>
+Consonant-only selections of 4 from {S×3, C×1, L×1}:<br/>
+$\{S,S,C,L\}$, $\{S,S,S,C\}$, $\{S,S,S,L\}$ — exactly <strong>3 ways</strong><br/>
+<div class="afinal">At least 1 vowel $= 41-3=\mathbf{38}$ ways</div>
 </div>
 </div>
 </div>
